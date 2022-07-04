@@ -7,6 +7,7 @@ export class GetPixabayPicApi {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    this.per_page = 40;
   }
   
   async fetchImages() {
@@ -17,7 +18,7 @@ export class GetPixabayPicApi {
       orientation: 'horizontal',
       safesearch: true,
       page: this.page,
-      per_page: 40,
+      per_page: this.per_page,
     });
 
     const { data } = await axios.get(`?${searchParams}`);
