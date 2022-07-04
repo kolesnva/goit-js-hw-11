@@ -88,6 +88,7 @@ async function onFormSubmit(event) {
     } 
 
     if (totalHits <= getPixabayPicApi.per_page) {
+      Notify.success(`Hooray! We found ${totalHits} images.`);
       renderGallery(hits);
       lightBox.refresh();
       hideLoadMoreBtn();
