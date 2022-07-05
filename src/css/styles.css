@@ -48,7 +48,9 @@ input {
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
 }
 
 .load-more {
@@ -66,4 +68,3 @@ input {
 .is-hidden {
   display: none;
 }
-
