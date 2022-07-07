@@ -24,6 +24,7 @@ export class GetPixabayPicApi {
     const { data } = await axios.get(`?${searchParams}`);
     this.incrementPage();
     return data;
+    
   }
 
   get currentSearchQuery() {

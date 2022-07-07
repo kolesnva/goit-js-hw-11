@@ -63,6 +63,7 @@ function renderGallery(searchedImages) {
 
 async function onFormSubmit(event) {
   event.preventDefault();
+  hideLoadMoreBtn();
   clearGalleryMarkup();
   getPixabayPicApi.resetPage();
 
@@ -84,25 +85,16 @@ async function onFormSubmit(event) {
     }
 
     if (totalHits > 0 && totalHits > getPixabayPicApi.per_page) {
-      showLoadMoreBtn();
       Notify.success(`Hooray! We found ${totalHits} images.`);
       renderGallery(hits);
       lightBox.refresh();
+      showLoadMoreBtn();
     }
 
     if (totalHits < 1) {
       hideLoadMoreBtn();
       Notify.failure("Sorry, there are no images matching your search query. Please try again.")
     }
-
-    const { height: cardHeight } = document
-  .querySelector(".gallery")
-  .firstElementChild.getBoundingClientRect();
-
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: "smooth",
-  });
 
   } catch (error) {
     console.log(error.message);
@@ -113,15 +105,15 @@ async function onFormSubmit(event) {
 async function onLoadMoreBtn() {
   try {
     const { hits, totalHits } = await getPixabayPicApi.fetchImages();
+    const lastPage = totalHits / 40;
 
-    if (hits.length < getPixabayPicApi.per_page) {
+    if (getPixabayPicApi.page-1 > lastPage) {
       hideLoadMoreBtn();
       Notify.warning("We're sorry, but you've reached the end of search results.");
       renderGallery(hits);
       lightBox.refresh();
-    }
-
-    if (totalHits > 0 && totalHits > getPixabayPicApi.per_page) {
+    } else {
+      showLoadMoreBtn();
       renderGallery(hits);
       lightBox.refresh();
     }
